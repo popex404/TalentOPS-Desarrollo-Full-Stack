@@ -1,3 +1,2 @@
-<<<<<<< HEAD
-Esta es la versión A del archivo
-
+Esta es la versión A del archivo.
+Esta es la versión B del archivo.
