@@ -1,0 +1,93 @@
+//Sistema de Registro con estructuras de control
+console.log("=== VALIDACIÓN DE FORMULARIO DE REGISTRO ===\n");
+
+// Datos de ejemplo del formulario
+let formulario = {
+  nombre: "Javier",
+  email: "javier@gmail.com",
+  edad: 29,
+  password: "ContraseñaSegura123!"
+};
+
+// Función para validar email con expresión regular
+function emailValido(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// Función para validar contraseña segura
+function passwordSegura(password) {
+  // Debe tener: 8+ caracteres, mayúscula, minúscula, número
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  return regex.test(password);
+}
+
+// Función principal de validación
+function validarFormulario(data) {
+  console.log("Procesando formulario...\n");
+
+  try {
+    // Validación de nombre
+    if (!data.nombre || data.nombre.trim() === "") {
+      throw new Error("❌ El nombre no puede estar vacío.");
+    }
+
+    // Validación de email
+    if (!emailValido(data.email)) {
+      throw new Error("❌ El email ingresado no es válido.");
+    }
+
+    // Validación de edad
+    if (typeof data.edad !== "number") {
+      throw new Error("❌ La edad debe ser un número.");
+    }
+
+    if (data.edad < 18 || data.edad > 99) {
+      throw new Error("❌ La edad debe estar entre 18 y 99 años.");
+    }
+
+    // Validación de contraseña
+    if (!passwordSegura(data.password)) {
+      throw new Error("❌ La contraseña no es segura. Debe incluir mayúscula, minúscula, número y tener mínimo 8 caracteres.");
+    }
+
+    console.log("✔️ Todas las validaciones fueron exitosas.\n");
+    return { exito: true, mensaje: "Formulario válido." };
+
+  } catch (error) {
+    console.log(error.message);
+    return { exito: false, mensaje: error.message };
+  }
+}
+
+// Ejecutar validación
+let resultado = validarFormulario(formulario);
+
+// Switch para categorizar edad del usuario
+function categoriaEdad(edad) {
+  switch (true) {
+    case edad >= 18 && edad <= 25:
+      return "Joven adulto";
+    case edad >= 26 && edad <= 40:
+      return "Adulto";
+    case edad >= 41 && edad <= 60:
+      return "Adulto mayor";
+    case edad >= 61:
+      return "Senior";
+    default:
+      return "Desconocido";
+  }
+}
+
+// Mostrar categoría de edad
+console.log("=== CATEGORIZACIÓN DE EDAD ===");
+console.log(`Categoría: ${categoriaEdad(formulario.edad)}\n`);
+
+// Ternario para mensaje de contraseña
+console.log("=== MENSAJE SOBRE CONTRASEÑA ===");
+let msgPassword =
+  passwordSegura(formulario.password)
+    ? "La contraseña cumple con los requisitos de seguridad."
+    : "La contraseña es débil, considera cambiarla.";
+
+console.log(msgPassword);
