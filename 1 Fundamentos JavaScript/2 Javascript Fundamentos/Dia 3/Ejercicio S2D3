@@ -1,0 +1,104 @@
+console.log("=== SISTEMA DE GESTIÓN DE TAREAS (TODO LIST) ===\n");
+
+// Factory de todo list usando closures
+function crearTodoList() {
+  let tareas = [];
+  let idCounter = 1;
+
+  // Función privada para validar texto
+  const validarTexto = (texto = "") =>
+    texto.trim().length > 0 || (() => { throw new Error("❌ El nombre de la tarea no puede estar vacío."); })();
+
+  return {
+    // Agregar tarea con parámetros avanzados (...tags)
+    agregarTarea: (nombre, ...tags) => {
+      try {
+        validarTexto(nombre);
+
+        const nueva = {
+          id: idCounter++,
+          nombre,
+          completada: false,
+          tags: tags.length ? tags : ["general"],
+          fecha: new Date().toLocaleString()
+        };
+
+        tareas.push(nueva);
+        console.log(`📝 Tarea agregada: "${nombre}" (id: ${nueva.id})`);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    // Marcar como completada
+    completarTarea: (id) => {
+      try {
+        const tarea = tareas.find(t => t.id === id);
+        if (!tarea) throw new Error(`❌ No existe una tarea con id ${id}.`);
+
+        tarea.completada = true;
+        console.log(`✔️ Tarea completada: "${tarea.nombre}"`);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    // Filtrar tareas (estado: "todas", "completadas", "pendientes")
+    filtrar: (estado = "todas") => {
+      switch (estado) {
+        case "completadas":
+          return tareas.filter(t => t.completada);
+
+        case "pendientes":
+          return tareas.filter(t => !t.completada);
+
+        case "todas":
+        default:
+          return [...tareas]; // copia segura
+      }
+    },
+
+    // Obtener estadísticas
+    obtenerEstadisticas: () => {
+      const total = tareas.length;
+      const completadas = tareas.filter(t => t.completada).length;
+      const pendientes = total - completadas;
+
+      return {
+        total,
+        completadas,
+        pendientes,
+        porcentaje: total === 0 ? 0 : ((completadas / total) * 100).toFixed(1)
+      };
+    },
+
+    // Obtener todas (copia)
+    obtenerTareas: () => [...tareas]
+  };
+}
+
+// Crear instancia del TODO list
+const todo = crearTodoList();
+
+// === Agregar tareas ===
+todo.agregarTarea("Estudiar JavaScript", "estudio", "programación");
+todo.agregarTarea("Hacer ejercicio");
+todo.agregarTarea("Comprar comida", "casa");
+todo.agregarTarea("Preparar presentación", "trabajo");
+
+// === Completar una tarea ===
+todo.completarTarea(2);
+
+// === Filtros ===
+console.log("\n=== Tareas completadas ===");
+console.log(todo.filtrar("completadas"));
+
+console.log("\n=== Tareas pendientes ===");
+console.log(todo.filtrar("pendientes"));
+
+console.log("\n=== Todas las tareas ===");
+console.log(todo.obtenerTareas());
+
+// === Estadísticas ===
+console.log("\n=== ESTADÍSTICAS ===");
+console.log(todo.obtenerEstadisticas());
