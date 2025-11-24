@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio - Javier García</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    nav {
+      background: #34495e;
+      padding: 1rem;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    
+    nav a:hover {
+      background: #3498db;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    section {
+      margin-bottom: 3rem;
+    }
+    
+    .hero {
+      text-align: center;
+      background: #ecf0f1;
+      padding: 3rem;
+      border-radius: 8px;
+    }
+    
+    .proyectos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .proyecto {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1rem;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    button {
+      background: #3498db;
+      color: white;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    
+    button:hover {
+      background: #2980b9;
+    }
+    
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Javier García</h1>
+    <p>Analista de Datos • Cientista de Datos Junior • Desarrollador</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-mi">Sobre Mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="inicio" class="hero">
+      <h2>Bienvenido a Mi Portafolio</h2>
+      <p>Trabajo con datos, tecnología y desarrollo para crear soluciones simples, útiles y centradas en las personas.</p>
+      <a href="#contacto"><button>Contáctame</button></a>
+    </section>
+
+    <section id="sobre-mi">
+      <h2>Sobre Mí</h2>
+      <article>
+        <p>
+          Soy Analista de Datos y Cientista de Datos Junior con formación en Ciencias de la Computación 
+          y experiencia trabajando con grandes volúmenes de datos durante mi rol
+          como analista blockchain. Tengo certificaciones en análisis de datos, ciencia de datos,
+          gestion de proyectos, analista de blockchains, Power BI, inteligencia artificial,
+          Google BigQuery y un bootcamp como Executive Assistant por Pareto Talent.
+        </p>
+        
+        <h3>Habilidades</h3>
+        <ul>
+          <li>Python (Pandas, NumPy, scikit-learn)</li>
+          <li>SQL (BigQuery, bases relacionales, Snowflake, Clickhouse, PostgreSQL, MySQL)</li>
+          <li>HTML, CSS, JavaScript</li>
+          <li>Git, GitHub, Docker</li>
+          <li>Análisis de datos, dashboards, visualización</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="proyectos">
+      <h2>Mis Proyectos</h2>
+      <div class="proyectos">
+
+        <a href="https://popex404.github.io/Gabriela-Mistral-en-el-Mundo/" target="_blank" style="text-decoration:none; color:inherit;">
+          <article class="proyecto">
+            <h3>Mapa Interactivo de Gabriela Mistral</h3>
+            <p>Lugares visitados por Gabriela Mistral a lo largo de su vida.</p>
+            <p><strong>Tecnologías:</strong> Python, Google Colab</p>
+          </article>
+        </a>
+
+        <a href="https://popex404.github.io/amigo-secreto/" target="_blank" style="text-decoration:none; color:inherit;">
+          <article class="proyecto">
+            <h3>Amigo Secreto</h3>
+            <p>Juego del amigo secreto.</p>
+            <p><strong>Tecnologías:</strong> HTML, CSS, JavaScript</p>
+          </article>
+        </a>
+
+        <a href="https://popex404.github.io/juego-secreto/" target="_blank" style="text-decoration:none; color:inherit;">
+          <article class="proyecto">
+            <h3>Juego Secreto</h3>
+            <p>Juego del número secreto.</p>
+            <p><strong>Tecnologías:</strong> HTML, CSS, JavaScript</p>
+          </article>
+        </a>
+
+      </div>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <form action="/contacto" method="POST">
+        <fieldset>
+          <legend>Envíame un Mensaje</legend>
+          
+          <label for="nombre">Nombre completo:</label>
+          <input type="text" id="nombre" name="nombre" required minlength="2">
+          
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" name="email" required>
+          
+          <label for="telefono">Teléfono:</label>
+          <input type="tel" id="telefono" name="telefono">
+          
+          <label for="asunto">Asunto:</label>
+          <select id="asunto" name="asunto" required>
+            <option value="">Seleccionar...</option>
+            <option value="proyecto">Consulta sobre proyecto</option>
+            <option value="colaboracion">Propuesta de colaboración</option>
+            <option value="empleo">Oportunidad laboral</option>
+            <option value="otro">Otro</option>
+          </select>
+          
+          <label for="mensaje">Mensaje:</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required minlength="10"></textarea>
+          
+          <label>
+            <input type="checkbox" name="newsletter" value="si">
+            Suscribirme al newsletter
+          </label>
+          
+        </fieldset>
+        
+        <button type="submit">Enviar Mensaje</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Javier García. Todos los derechos reservados.</p>
+    <p>
+      <a href="https://github.com/popex404" target="_blank">GitHub</a> | 
+      <a href="https://www.linkedin.com/in/javier-garcia-popex404/" target="_blank">LinkedIn</a>
+    </p>
+  </footer>
+</body>
+</html>
