@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>To-Do App — Avanzada</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-theme="light">
+  <header class="topbar">
+    <div class="brand">✅ Tareas Pro</div>
+
+    <div class="controls">
+      <input id="search" type="search" placeholder="Buscar en tiempo real..." aria-label="Buscar tareas" />
+      <button id="btn-darkmode" title="Alternar tema">🌙</button>
+      <button id="btn-export-json" title="Exportar JSON">⤓ JSON</button>
+      <button id="btn-export-csv" title="Exportar CSV">⤓ CSV</button>
+      <input id="import-json" type="file" accept="application/json" style="display:none" />
+      <button id="btn-import-json" title="Importar JSON">⤒ JSON</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel left">
+      <div class="card">
+        <h3>Crear tarea</h3>
+        <form id="form-add">
+          <input id="task-text" type="text" placeholder="Título de la tarea" required maxlength="120" />
+          <input id="task-tags" type="text" placeholder="Etiquetas (separadas por coma)" />
+          <select id="task-priority">
+            <option value="normal">Prioridad: Normal</option>
+            <option value="high">Prioridad: Alta</option>
+            <option value="low">Prioridad: Baja</option>
+          </select>
+          <div class="form-row">
+            <button class="btn primary" type="submit">Agregar</button>
+            <button class="btn outline" type="button" id="btn-clear">Limpiar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Filtros</h3>
+        <div id="filters">
+          <button class="chip active" data-filter="all">Todas</button>
+          <button class="chip" data-filter="pending">Pendientes</button>
+          <button class="chip" data-filter="completed">Completadas</button>
+        </div>
+
+        <h4>Etiquetas</h4>
+        <div id="tag-list" class="tag-list">
+          <!-- tags dinámicos -->
+        </div>
+      </div>
+    </aside>
+
+    <section class="panel center">
+      <div class="info-row">
+        <div>Total: <span id="stat-total">0</span></div>
+        <div>Completadas: <span id="stat-completed">0</span></div>
+        <div>Pendientes: <span id="stat-pending">0</span></div>
+      </div>
+
+      <div id="todo-list" class="todo-list" aria-live="polite">
+        <!-- render tareas (drag & drop) -->
+      </div>
+
+      <div id="empty" class="empty">No hay tareas todavía — agrega la primera.</div>
+    </section>
+
+    <aside class="panel right">
+      <div class="card">
+        <h3>Ayuda rápida</h3>
+        <ul>
+          <li>Arrastra una tarjeta para reordenar</li>
+          <li>Haz doble click en el título para editar (Enter para guardar)</li>
+          <li>Busca en tiempo real desde la barra superior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Importante</h3>
+        <p>La persistencia guarda localmente en <code>localStorage</code>. Puedes exportar/ importar JSON o descargar CSV.</p>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
