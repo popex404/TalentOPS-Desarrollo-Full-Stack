@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Administrativo</title>
+
+  <style>
+    /* =============================== */
+    /* VARIABLES DE TEMA (LIGHT/DARK) */
+    /* =============================== */
+    :root {
+      --bg: #f5f6fa;
+      --bg-card: #ffffff;
+      --bg-sidebar: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --primary: #3498db;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1f24;
+      --bg-card: #2a2c31;
+      --bg-sidebar: #2d2f36;
+      --text: #ecf0f1;
+      --text-light: #bdc3c7;
+      --shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      transition: var(--transition);
+    }
+
+    /* =============================== */
+    /* SIDEBAR */
+    /* =============================== */
+
+    .sidebar {
+      width: 240px;
+      background: var(--bg-sidebar);
+      min-height: 100vh;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      position: fixed;
+      left: 0;
+      top: 0;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .sidebar.oculto {
+      width: 70px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar.oculto h2 {
+      opacity: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .menu-item {
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+
+    .menu-item:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    /* =============================== */
+    /* HEADER */
+    /* =============================== */
+    header {
+      position: fixed;
+      left: 240px;
+      right: 0;
+      top: 0;
+      height: 60px;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .sidebar.oculto + header {
+      left: 70px;
+    }
+
+    .hamburger {
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 1.3rem;
+    }
+
+    /* =============================== */
+    /* CONTENIDO PRINCIPAL */
+    /* =============================== */
+    main {
+      margin-top: 80px;
+      margin-left: 260px;
+      padding: 2rem;
+      width: 100%;
+      transition: var(--transition);
+    }
+
+    .sidebar.oculto ~ header ~ main {
+      margin-left: 90px;
+    }
+
+    /* GRID DE CARDS */
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    /* =============================== */
+    /* GRÁFICOS SIMULADOS (CSS) */
+    /* =============================== */
+
+    .bar-chart {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      height: 120px;
+    }
+
+    .bar {
+      width: 20%;
+      background: var(--primary);
+      border-radius: 6px 6px 0 0;
+      transition: 0.4s ease;
+    }
+
+    .bar:hover {
+      opacity: 0.7;
+      transform: scaleY(1.1);
+    }
+
+    .line-chart {
+      height: 120px;
+      position: relative;
+    }
+
+    .line {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    /* =============================== */
+    /* LOADING STATE */
+    /* =============================== */
+
+    .loading {
+      height: 20px;
+      width: 100%;
+      background: linear-gradient(90deg, #ccc, #eee, #ccc);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 6px;
+    }
+
+    @keyframes loading {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    /* =============================== */
+    /* RESPONSIVE */
+    /* =============================== */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        z-index: 1000;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.visible {
+        transform: translateX(0);
+      }
+
+      header {
+        left: 0 !important;
+      }
+
+      main {
+        margin-left: 0 !important;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <h2>Dashboard</h2>
+
+    <div class="menu">
+      <div class="menu-item">Inicio</div>
+      <div class="menu-item">Usuarios</div>
+      <div class="menu-item">Ventas</div>
+      <div class="menu-item">Reportes</div>
+      <div class="menu-item">Ajustes</div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="hamburger" id="hamburger">☰</div>
+    <div class="theme-toggle" id="themeToggle">🌙</div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+    <h1 style="margin-bottom: 1.5rem;">Panel Administrativo</h1>
+
+    <div class="grid">
+
+      <!-- CARD 1: BARRAS -->
+      <div class="card">
+        <div class="card-title">Ventas del Mes</div>
+        <div class="bar-chart">
+          <div class="bar" style="height: 60%"></div>
+          <div class="bar" style="height: 80%"></div>
+          <div class="bar" style="height: 40%"></div>
+          <div class="bar" style="height: 70%"></div>
+          <div class="bar" style="height: 90%"></div>
+        </div>
+      </div>
+
+      <!-- CARD 2: LÍNEAS -->
+      <div class="card">
+        <div class="card-title">Usuarios activos</div>
+        <div class="line-chart">
+          <div class="line" style="top: 80%; left: 5%"></div>
+          <div class="line" style="top: 60%; left: 25%"></div>
+          <div class="line" style="top: 50%; left: 45%"></div>
+          <div class="line" style="top: 30%; left: 65%"></div>
+          <div class="line" style="top: 40%; left: 85%"></div>
+        </div>
+      </div>
+
+      <!-- CARD 3: LOADING -->
+      <div class="card">
+        <div class="card-title">Cargando datos...</div>
+        <div class="loading"></div>
+      </div>
+
+      <!-- CARD 4: RANDOM INFO -->
+      <div class="card">
+        <div class="card-title">Resumen General</div>
+        <p class="text-light">Usuarios registrados: <b>1823</b></p>
+        <p class="text-light">Órdenes completadas: <b>721</b></p>
+        <p class="text-light">Tasa de conversión: <b>4.3%</b></p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const hamburger = document.getElementById("hamburger");
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    // Abrir / cerrar sidebar (desktop)
+    hamburger.addEventListener("click", () => {
+      if (window.innerWidth > 768) {
+        sidebar.classList.toggle("oculto");
+      } else {
+        sidebar.classList.toggle("visible");
+      }
+    });
+
+    // Tema oscuro / claro
+    themeToggle.addEventListener("click", () => {
+      const newTheme = body.dataset.theme === "light" ? "dark" : "light";
+      body.dataset.theme = newTheme;
+      themeToggle.textContent = newTheme === "light" ? "🌙" : "☀️";
+    });
+  </script>
+</body>
+</html>
